@@ -1,15 +1,8 @@
-# Laporan Proyek Machine Learning - Ahmad Wandi
-Ini adalah proyek akhir sistem rekomendasi untuk memenuhi submission dicoding. Proyek ini membangun model berbasis _content based filtering_ yang dapat menentukan top-N rekomendasi anime dan model _K-Nearest Neighbor_.
+# Laporan Proyek Machine Learning
+Project ini merupakan submission dicoding pada kelas Machine learning Terapan. Dalam project ini, saya membuat sistem rekomendasi film KDrama menggunakan model berbasis *content based filtering* dan model *KNN* yang dapat menentukan rekomendasi judul KDrama teratas.
 ## Project Overview
 
-![inbox_11299784_caaff69976c0a1e97c7d55eb82383680_static-assets-upload6207184415643227018](https://github.com/Mayumiwandi/My-Learn/assets/84662810/0ce1eb4b-9fe5-4b65-bf81-6f4c4f6cc774)
-
-[Referensi gambar](https://www.kaggle.com/datasets/dbdmobile/myanimelist-dataset/data)
-
-
-
-Anime, animasi khas Jepang yang digemari banyak orang, kini tersedia di berbagai platform streaming. Namun, banyaknya pilihan anime justru membuat pengguna kesulitan menemukan yang sesuai selera. Penelitian ini mengusulkan sistem rekomendasi untuk mengatasi masalah tersebut.[[1](https://openlibrary.telkomuniversity.ac.id/home/catalog/id/185894/slug/anime-rekomendasi-menggunakan-collaborative-filtering.html)] Sistem ini akan menganalisis riwayat tontonan pengguna, genre favorit, dan rating yang diberikan. Dengan demikian, sistem dapat merekomendasikan anime yang sesuai preferensi masing-masing pengguna. Selain itu, faktor lain seperti popularitas, ulasan pengguna, dan rekomendasi komunitas juga akan dipertimbangkan.[[2](https://repository.uinjkt.ac.id/dspace/bitstream/123456789/45316/1/Ida%20Aisyah.pdf)]
-Sistem ini menawarkan keuntungan signifikan bagi pengguna dan penyedia layanan streaming. Pengguna dapat menemukan anime favorit baru, menjelajahi genre baru, dan menemukan anime yang sesuai suasana hati mereka. Sementara bagi perusahaan, sistem ini dapat meningkatkan jumlah penonton, menyediakan konten yang beragam, meningkatkan kepuasan pengguna, dan memahami preferensi pengguna terkait anime yang diinginkan. Singkatnya, sistem rekomendasi dapat menjadi solusi efektif untuk membantu pengguna menemukan anime yang sesuai selera dan meningkatkan pengalaman menonton mereka secara keseluruhan.[[3](https://www.researchgate.net/publication/274712918_Rekomendasi_Anime_dengan_Latent_Semantic_Indexing_Berbasis_Sinopsis_Genre)]
+![image](https://github.com/user-attachments/assets/6841377f-4718-4d1a-8163-04fa8ae7923a)
 
 ## Business Understanding
 Pengembangan sistem rekomendasi anime memiliki potensi untuk memberikan banyak manfaat bagi pengguna dan platform streaming anime. Sistem ini dapat membantu pengguna menemukan anime yang sesuai dengan selera mereka dengan lebih mudah dan efisien, dan dapat membantu platform meningkatkan engagement pengguna, kepuasan pengguna, dan efisiensi platform.[[4](https://jurnal.stkippgritulungagung.ac.id/index.php/jipi/article/view/4222)]
@@ -65,58 +58,24 @@ Pada model kali ini dataset yang digunakan adalah file `anime-filtered.csv`
 
 ### Variable - variable pada dataset
 Kolom datasets anime memiliki informasi berikut:
-* **`anime_id`:** ID unik untuk setiap anime (angka atau kode pengenal).
-* **`Name`:** Judul anime dalam bahasa aslinya.
-* **`Score`:** Skor atau rating yang diberikan kepada anime.
-* **`Genres`:** Genre anime, dipisahkan dengan koma (misalnya, Aksi, Komedi, Fantasi).
-* **`English name`:** Judul anime dalam bahasa Inggris (jika tersedia).
-* **`Japanese name`:** Judul anime dalam bahasa Jepang (jika tersedia).
-* **`Synopsis`:** Deskripsi singkat atau ringkasan plot anime.
-* **`Type`:** Jenis anime (misalnya, TV Series, Movie, OVA, dll.).
-* **`Episodes`:** Jumlah episode dalam anime.
-* **`Aired`:** Tanggal penayangan anime.
-* **`Premiered`:** Musim dan tahun penayangan perdana anime.
-* **`Producers`:** Perusahaan produksi atau produser anime.
-* **`Licensors`:** Pihak yang memiliki lisensi anime (misalnya, platform streaming).
-* **`Studios`:** Studio animasi yang mengerjakan anime.
-* **`Source`:** Sumber materi anime (misalnya, manga, light novel, original).
-* **`Duration`:** Durasi setiap episode anime.
-* **`Rating`:** Batasan usia untuk menonton anime.
-* **`Ranked`:** Peringkat anime berdasarkan popularitas atau kriteria lain.
-* **`Popularity`:** Peringkat popularitas anime.
-* **`Members`:** Jumlah anggota yang telah menambahkan anime ke daftar mereka di platform.
-* **`Favorites`:** Jumlah pengguna yang menandai anime sebagai favorit.
-* **`Watching`:** Jumlah anime yang sedang ditonton oleh pengguna.
-* **`Completed`:** Jumlah anime yang telah selesai ditonton oleh pengguna.
-* **`On Hold`:** Jumlah anime yang ditunda oleh pengguna.
-* **`Dropped`:** Jumlah anime yang dihentikan oleh pengguna.
 
-
-![rating-rekomendasi](https://github.com/Mayumiwandi/My-Learn/assets/84662810/b9d423b6-a978-43b3-bcf4-0b12c20e766c)
-
-Gambar 1. Rating
-
-
-![download](https://github.com/Mayumiwandi/My-Learn/assets/84662810/4a121818-d02a-45eb-8b2c-6d1cffd3dddf)
-
-Gambar 2. Categories distribution
-
-Berdasarkan _Gambar 1. Rating_ dapat kita lihat rata-rata Rating adalah `6.5`, minimal rating adalah `1.8`, dan maxsimal rating adalah `9.1`. Dan berdasarkan _Gambar 2. Categories distribution_ anime terdiri dari 6 tipe berupa TV, OVA, Movie, Special, ONA, Music. _TV (Television Series)_ yang ditayangkan di televisi dengan episode yang bervariasi, _OVA (Original Video Animation)_ yang dirilis untuk media rumahan, seperti DVD, _Movie_ yang dirilis di bioskop dengan durasi yang lebih panjang, _Special_ yang seringkali menjadi bonus atau tambahan dari seri TV atau film, _ONA (Original Net Animation)_ yang didistribusikan secara daring, dan Music yang dibuat untuk menyoroti perilisan album musik atau single.
-
-
-![download (1)](https://github.com/Mayumiwandi/My-Learn/assets/84662810/6c8ef782-c945-4ed9-baf7-6b11e0b6ad45)
-
-Gambar 3. Top 10 Anime Community
-
-
-![download (3)](https://github.com/Mayumiwandi/My-Learn/assets/84662810/1bfabba0-6fc3-4ba3-b039-6e7d6bb6f470)
-
-
-Gambar 4. Top Rating Tertinggi
-
-Berdasarkan _Gambar 3. Top 10 Anime Community_ dapat dilihat Top 10 Komunitas anime Death Note menjadi komunitas terbanyak pertama, disusul dengan Shingeki no Kyojin kedua, Fullmetal Alchemist: Brotherhood ketiga, Sword Art Online keempat, One Punch Man kelima, Boku no Hero Academia keenam, Tokyo Ghoul ketujuh, Naruto kedelapan, Steins Gate kesembilan, dan No Game No Life kesepuluh. Informasi ini dapat digunakan pengembang sistem dalam merekomendasikan anime yang populer kepada penggunanya. Banyaknya anggota komunitas anime menandakan bahwa anime cukup favorit dan populer di kalangan pengguna.
-
-Dan pada _Gambar 4. Top Rating Tertinggi_  dapat dilihat rating tertinggi pertama adalah Fullmetal Alchemist: Brotherhood, dan kedua Shingeki no Kyojin: Final Season, ketiga Steins Gate, keempat Shingeki no Kyojin Season 3 Part 2, kelima Hunter x Hunter(2011), keenam Gintama°, ketujuh Gintama', kedelapan Ginga Eiyuu Densetsu, kesembilan Gintama': Enchousen dan kesepuluh adalah 3-gatsu no Lion 2nd Season. Informasi ini dapat digunakan pengembang sistem dalam merekomendasikan anime yang populer kepada penggunanya. Hal ini dikarenakan semakin banyaknya kontribusi peringkat, semakin banyak pula pengguna yang menonton anime tersebut (populer).
+*    Name : Judul KDrama
+*    Aired Date : Tanggal dari saat hingga KDrama pertama kali ditayangkan.
+*    Year of release : Tahun rilis KDrama
+*    Original Network : Penayangan KDrama
+*    Aired On : Hari-hari dalam seminggu saat KDrama ditayangkan.
+*    Number of Episodes : Jumlah episode yang ada
+*    Duration : Lama penayangan (dalam jam dan menit)
+*    Content Rating : Batasan usia
+*    Rating : Skor atau penilaian yang diberikan penonton pada KDrama
+*    Sypnosis : Sipnosis dari KDrama
+*    Genre : Jenis KDrama (Life, Drama, Romantic, dan lainnya)
+*    Tags : Tema
+*    Director : Sutradara
+*    Screenwriter : pPnulis
+*    Cast : Pemeran
+*    Production companies : Perusahaan yang memproduksi KDrama
+*    Rank : Peringkat KDrama
 
 ## Data Preparation
 
@@ -270,22 +229,6 @@ Dan didapatkan score dari pengujian model.
 ```
 
 Hasil evaluasi Davies-Bouldin (DB) menunjukkan bahwa model ini memiliki skor yang relatif cukup kecil, dengan nilai DB sebesar `0.7864266764751376` Hal ini menandakan bahwa model sudah memiliki separasi kluster yang cukup baik. Sebagai hasilnya, rekomendasi anime memiliki kualitas yang baik, mempertimbangkan bahwa pengelompokan kluster dalam model sudah cukup efektif dalam memisahkan data. Hal ini terbukti dengan hasil rekomendasi aplikasi yang sudah cukup baik.
- 
- 
-## Referensi
-1. Iklil jayaperwira,dkk.(2023). Anime Rekomendasi Menggunakan Collaborative Filtering. Jurnal e-Proceeding of Engineering.Vol.10, No.3 Juni 2023. Tersedia: [tautan.](https://openlibrary.telkomuniversity.ac.id/home/catalog/id/185894/slug/anime-rekomendasi-menggunakan-collaborative-filtering.html)
-2. Ida Aisyah. (2019). ANIME DAN GAYA HIDUP MAHASISWA (Studi pada Mahasiswa yang Tergabung dalam Komunitas Japan Freak UIN Jakarta). Skripsi UNIVERSITAS ISLAM NEGERI SYARIF HIDAYATULLAH JAKARTA. Tersedia: [tautan.](https://repository.uinjkt.ac.id/dspace/bitstream/123456789/45316/1/Ida%20Aisyah.pdf)
-3. Rudy Aditya Abarja, Hapnes Toba. (2015). Rekomendasi Anime dengan Latent Semantic Indexing Berbasis Sinopsis Genre. Tersedia: [tautan.](https://www.researchgate.net/publication/274712918_Rekomendasi_Anime_dengan_Latent_Semantic_Indexing_Berbasis_Sinopsis_Genre)
-4. Nazhif Muafa Roziqiin, M. Faisal. (2024). SISTEM REKOMENDASI PEMILIHAN ANIME MENGGUNAKAN USER-BASED COLLABORATIVE FILTERING. Jurnal Ilmiah Penelitian dan Pembelajaran Informatika.Vol 9, No 1 (2024). Tersedia: [tautan.](https://jurnal.stkippgritulungagung.ac.id/index.php/jipi/article/view/4222)
-5. Sindhu Seelam. (2021). Machine Learning Fundamentals: Cosine Similarity and Cosine Distance. Published in Geek Culture. Tersedia: [tautan.](https://medium.com/geekculture/cosine-similarity-and-cosine-distance-48eed889a5c4)
-6. Asep Maulana Ismail. (2018). Cara Kerja Algoritma k-Nearest Neighbor (k-NN). Published in Bee Solution Partners. Tersedia: [tautan.](https://medium.com/bee-solution-partners/cara-kerja-algoritma-k-nearest-neighbor-k-nn-389297de543e)
-7. Rina. (2023). Memahami Confusion Matrix: Accuracy, Precision, Recall, Specificity, dan F1-Score untuk Evaluasi Model Klasifikasi. Tersedia: [tautan.](https://esairina.medium.com/memahami-confusion-matrix-accuracy-precision-recall-specificity-dan-f1-score-610d4f0db7cf)
-8. Haitian Wei. (2020). How to measure clustering performances when there are no ground truth?. Tersedia: [tautan.](https://medium.com/@haataa/how-to-measure-clustering-performances-when-there-are-no-ground-truth-db027e9a871c)
-9. Davies, David L. Bouldin, Donald W. (1979). A Cluster Separation Measure. IEEE Transactions on Pattern Analysis and Machine Intelligence. PAMI-1 (2): 224-227. Tersedia: [tautan.](https://ieeexplore.ieee.org/document/4766909)
-
-
-
-
 
 
 
