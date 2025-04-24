@@ -121,7 +121,7 @@ Berikut ini adalah aplikasi yang juga mungkin akan disukai :
 | SKY Castle	                                  | 98.0%            |
 
 ## Evaluation
-- **Precision@k**: Seberapa relevan rekomendasi Top-k
+- **Precision**: Seberapa relevan rekomendasi Top-k
 - **Calinski-Harabasz Score**: Evaluasi kualitas klaster,
   Skor ini digunakan untuk mengevaluasi kualitas hasil clustering. Semakin tinggi nilainya, semakin baik performa clustering karena :
   - Variasi antar klaster (jarak antara klaster) besar.
