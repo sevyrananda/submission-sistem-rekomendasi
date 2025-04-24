@@ -5,59 +5,39 @@ Project ini merupakan submission dicoding pada kelas Machine learning Terapan. D
 ![image](https://github.com/user-attachments/assets/6841377f-4718-4d1a-8163-04fa8ae7923a)
 
 ## Business Understanding
-Pengembangan sistem rekomendasi anime memiliki potensi untuk memberikan banyak manfaat bagi pengguna dan platform streaming anime. Sistem ini dapat membantu pengguna menemukan anime yang sesuai dengan selera mereka dengan lebih mudah dan efisien, dan dapat membantu platform meningkatkan engagement pengguna, kepuasan pengguna, dan efisiensi platform.[[4](https://jurnal.stkippgritulungagung.ac.id/index.php/jipi/article/view/4222)]
+Sistem rekomendasi KDrama ini dapat digunakan untuk membantu pengguna menemukan KDrama yang sesuai dengan selera mereka dengan lebih mudah dan efisien. Dengan memberikan rekomendasi judul KDrama teratas sesuai preferensi, menjadikan penonton KDrama tidak bingung saat memilih tontonan KDrama yang akan di tonton. 
+
 ### Problem Statements
-- Bagaimana cara membuat sistem rekomendasi anime yang merekomendasikan pengguna berdasarkan genre anime?
-- Dengan menggunakan data rating yang dimiliki pengguna, bagaimana perusahaan jasa streaming dapat merekomendasikan anime yang belum pernah ditonton pengguna?
-- Bagimana membuat model sistem rekomendasi Cosine Similarity dan K-Nearest Neighbor?
-- Bagaimanna cara mengukur nilai perfoma model sistem rekomendasi yang telah dibangun?
+- Bagaimana cara membuat sistem rekomendasi KDrama yang merekomendasikan pengguna berdasarkan genre yang ada?
+- Dari data rating yang pengguna berikan terhadap KDrama, bagaimana perusahaan channel penayangan dapat merekomendasikan anime yang belum pernah ditonton pengguna?
+- Bagimana cara membuat model sistem rekomendasi Cosine Similarity dan K-Nearest Neighbor?
+- Bagaimana cara mengukur nilai perfoma model pada sistem rekomendasi yang telah dibangun?
 
 ### Goals
-Untuk menjawab permasalahan tersebut dibuatlah sistem rekomendasi dengan tujuan sebagai berikut:
-
-- Menghasilkan rekomendasi anime sebanyak Top-N Rekomendasi kepada pengguna berdasarkan genre.
-- Menghasilkan beberapa rekomendasi anime yang sesuai dengan preferensi pengguna dan belum pernah ditonton.
-- Membuat model sistem rekomendasi Cosine Similarity dan K-Nearest Neighbor berdasarkan fitur yang telah dipilih dari dataset
-- Mengukur perfoma model sistem rekomendasi dengan menggunakan metrik evaluasi
+Untuk menjawab permasalahan yang ada, dikembangkanlah sistem rekomendasi dengan tujuan :
+- Menghasilkan rekomendasi KDrama sebanyak Top-N, dimana N tersebut digunakan top 5/10 Rekomendasi kepada pengguna berdasarkan genre.
+- Menghasilkan rekomendasi KDrama yang telah sesuai dengan preferensi pengguna dan juga belum pernah dilihat oleh pengguna.
+- Membuat model sistem rekomendasi menggunakan Cosine Similarity dan K-Nearest Neighbor berdasarkan fitur yang telah dipilih dari dataset
+- Mengukur perfoma model pada sistem rekomendasi dengan menggunakan metrik evaluasi
 
 ### Solution Approach
-Menganalisis data dengan melakukan Exploratory Data Analysis dan melakukan visualisasi.
-Agar didapatkan model prediksi yang baik maka dilakukanlah _data cleaning_ berupa menghapus missing value , memeriksa apakah ada data yang duplikat ,dan Menghapus tanda baca alfanumerik dan Hapus link (URL). Melakukan _One hot encoding_  untuk mengubah data kategorikal menjadi nilai numerik, Untuk mengetahui perfoma model dilakukan pengecekan performa dengan metrik evaluasi seperti _Precission, Calinski Harabasz Score, dan Davies Bouldin Score_.
+Dalam proses analisis data, dilakukan Exploratory Data Analysis (EDA) serta visualisasi data untuk memperoleh pemahaman yang lebih baik terhadap dataset. Untuk menghasilkan model prediksi yang optimal, dilakukan beberapa tahap data cleaning seperti menghapus nilai yang hilang (missing values), memeriksa keberadaan data duplikat, menghapus karakter alfanumerik yang tidak diperlukan, serta menghilangkan tautan (URL) dari data. Selain itu, dilakukan proses one-hot encoding untuk mengonversi data kategorikal menjadi format numerik. Guna menilai kinerja model yang dibangun, digunakan beberapa metrik evaluasi seperti Precision, Calinski-Harabasz Score, dan Davies-Bouldin Score.
+
 ## Data Understanding
 ### EDA - Deskripsi Variabel
 
-| Jenis    | Keterangan                                                |
-|----------|-----------------------------------------------------------|
-| Title    | Anime Dataset 2023                                        |
-| Source   |[Kaggle](https://www.kaggle.com/datasets/dbdmobile/myanimelist-dataset/data?select=anime-filtered.csv)                                                  |
-| Maintainer | [Sajid](https://www.kaggle.com/dbdmobile)                                                   |
-| License  | Database: Open Database, Contents: Database Contents      |
-| Visibility | Publik                                                  |
-| Tags     | Arts and Entertainment, Movies and TV Shows, Anime and Manga, Popular Culture, Japan |
-| Usability | 10.00                                                     |
-
-
-Berikut informasi pada dataset: Kumpulan dataset ini dikumpulkan dari platform [MyAnimeList](https://myanimelist.net/)  , komunitas online populer dan database untuk penggemar anime dan manga. Platform ini menyediakan informasi berharga tentang acara anime, profil pengguna, dan skor pengguna untuk berbagai anime. Dataset yang digunakan pada proyek kali ini disediakan secara publik di kaggle dengan nama datasets yaitu: _Anime Dataset 2023_ . Dataset ini dapat diunduh di Kaggle : [Anime Dataset 2023](https://www.kaggle.com/datasets/dbdmobile/myanimelist-dataset/data?select=anime-filtered.csv) .
-
+Dataset : [Kaggle](https://www.kaggle.com/datasets/ahbab911/top-250-korean-dramas-kdrama-dataset)                      
 
 **Berikut informasi pada dataset** :
  - Datasets berupa file csv (Comma-Seperated Values).
- - Dataset berupa 6 buah file CSV yaitu: 
-    * anime-dataset-2023.csv  
-    * anime-filtered.csv      
-    * final_animedataset.csv  
-    * user-filtered.csv       
-    * users-details-2023.csv  
-    * users-score-2023.csv
-
-Pada model kali ini dataset yang digunakan adalah file `anime-filtered.csv`
- - Dataset memiliki 14952 sample dengan 25 fitur.
- - Dataset memilik 15 fitur `object`, 8 fitur `int64`, dan 2 fitur `float64`.
- - Terdapat *Missing value* pada fitur  `sypnopsis sebanyak 1350 dan Ranked sebanyak 1721`.
+ - Dataset berupa 1 buah file CSV yaitu: 
+    * kdarama.csv  
+ - Dataset memiliki 250 data review dengan 17 fitur.
+ - Dataset memilik 14 fitur object, 2 fitur int64, dan 1 fitur float64.
  - Tidak ada data yang duplikat.
+ - Terdapat *Missing value* pada fitur Content Rating sebanyak 5, Director sebanyak 1, Screenwriter sebanyak 1, dan Production companies sebanyak 2.
 
-### Variable - variable pada dataset
-Kolom datasets anime memiliki informasi berikut:
+### Kolom datasets anime memiliki informasi berikut:
 
 *    Name : Judul KDrama
 *    Aired Date : Tanggal dari saat hingga KDrama pertama kali ditayangkan.
@@ -72,22 +52,27 @@ Kolom datasets anime memiliki informasi berikut:
 *    Genre : Jenis KDrama (Life, Drama, Romantic, dan lainnya)
 *    Tags : Tema
 *    Director : Sutradara
-*    Screenwriter : pPnulis
+*    Screenwriter : Pnulis
 *    Cast : Pemeran
 *    Production companies : Perusahaan yang memproduksi KDrama
 *    Rank : Peringkat KDrama
 
 ## Data Preparation
 
-Pada proses Data Preparation dilakukan _text cleaning_ untuk membersihkan teks dari tanda baca dan URL. Untuk data yang _missing value_ adalah dengan menerapkan metode _dropping_ menggunakan drop(). adapun alasan mengapa Metode _dropping_ ini digunakan karna data yang akan di hapus tidak mempengaruhi model. Yang awalnya jumlah dataset sebanyak `14952` dan dengan menghapus jumlah _missing value_ dataset sekarang menjadi `13229`. Untuk membangun sistem rekomendasi pada proyek kali ini digunakan fitur `Name, Score, Genres, Type, Studios`. Sistem rekomendasi berbasis genre, atribut yang akan digunakan yakni `Name dan genres`. Sistem rekomendasi dengan metode collaborative filtering, atribut yang digunakan yakni: `Name, Score dan Type`. Dan dilakukan _one-hot encoding_ untuk mengubah fitur `Type`dan `Score`, digunakan untuk mengubah variabel kategorikal menjadi bentuk yang lebih mudah dipahami oleh model pembelajaran mesin.
-
+Langkah-langkah :
+- Menghapus missing value secara keseluruhan menggunakan `data = data.dropna()`
+- Menghapus kolom yang tidak dibutuhkan seperti  'Aired Date','Year of release', 'Aired On', 'Number of Episodes', 'Duration', 'Content Rating', 'Synopsis', 'Tags',
+    'Director',
+    'Screenwriter',
+    'Cast',
+    'Rank'
+- Fitur yang digunakan:
+  - *Content-based Filtering*: `Name`, `Genre`
+ 
 ## Modeling 
-Pada proyek ini hanya gunakan Model Cosine Similarity dan K-Nearest Neighbor. Kedua algoritma ini akan mempelajari kesamaan antar data dalam fitur yang ada.
+Pada project ini saya menggunakan Model Cosine Similarity dan K-Nearest Neighbor. Kedua algoritma ini akan mempelajari kesamaan antar data dalam fitur yang ada.
 
 ### Cosine similarity
-
-_Cosine similarity_ adalah metode untuk mengukur seberapa mirip dua vektor dalam ruang multidimensi. Ini adalah pengukuran kosinus sudut antara dua vektor yang dimensi dan magnitudonya direpresentasikan sebagai titik dalam ruang. Nilai similaritas kosinus berkisar antara -1 hingga 1, di mana nilai 1 menunjukkan kedua vektor sepenuhnya sejajar (100% mirip), 0 menunjukkan vektor tegak lurus (tidak ada keterkaitan), dan -1 menunjukkan kedua vektor sepenuhnya berlawanan arah (100% tidak mirip). Metode ini sering digunakan dalam pemrosesan teks dan pengelompokan data untuk menentukan tingkat kesamaan antara dokumen atau fitur dalam dataset. [[5](https://medium.com/geekculture/cosine-similarity-and-cosine-distance-48eed889a5c4)]
-
 Cosine Similarity dituliskan dalam rumus: 
 
 $$Cosine Similarity (A, B) = (A · B) / (||A|| * ||B||)$$ 
@@ -97,141 +82,59 @@ dimana:
 - ||A|| mewakili norma Euclidean (magnitudo) dari vektor A.
 - ||B|| mewakili norma Euclidean (magnitudo) dari vektor B.
 
-Untuk melakukan pengujian model, digunakan potongan kode berikut.
-```python
-anime_recommendations('One Piece')
-```
-| Name                                             | Genres                                                       |
-|--------------------------------------------------|--------------------------------------------------------------|
-| One Piece Episode of Sorajima                   |Action, Adventure, Comedy, Drama, Fantasy, Shounen, Super Power.         |
-| One Piece Episode of Merry Mou Hitori no Nakama no Monogatari| Action, Adventure, Comedy, Drama, Fantasy, Shounen, Super Power.          |
-| One Piece Movie 14 Stampede                      | Action, Adventure, Comedy, Drama, Fantasy, Shounen, Super Power. |
-| One Piece Episode of East Blue  Luffy to 4 nin no Nakama no Daibouken| Action, Adventure, Comedy, Drama, Fantasy, Shounen, Super Power.  |
-| One Piece Episode of Sabo  3 Kyoudai no Kizuna Kiseki no Saikai to Uketsugareru Ishi| Action, Adventure, Comedy, Drama, Fantasy, Shounen, Super Power   |
+untuk menguji model saya mencoba seperti ini 
+Jika input: `Dr. Romantic`, maka output:
 
-Table 1. Hasil Pengujian Model Content Based Filtering (dengan Filter Genres).
-
-Berdasarkan _Table 1. Hasil Pengujian Model Content Based Filtering (dengan Filter Genres)._  Sistem telah berhasil merekomendasikan top 5 persen anime yang mirip dengan **One Piece**, yang termasuk beberapa film dan seri dari **One Piece** itu sendiri. Ini berarti bahwa jika seorang pengguna menyukai **One Piece**, maka sistem dapat memberikan rekomendasi untuk seri atau film lain dalam waralaba **One Piece**. Dengan pendekatan ini, sistem mengidentifikasi anime-anime yang memiliki kemiripan dalam genre dengan **One Piece**, sehingga memungkinkan pengguna untuk menemukan konten yang sesuai dengan preferensi mereka berdasarkan kesukaan mereka terhadap **One Piece**.
-
-Kelebihan _Cosine Similarity_:
-- Kompleksitas yang rendah, membuatnya efisien dalam perhitungan.
-- Cocok digunakan pada dataset dengan dimensi yang besar karena tidak terpengaruh oleh jumlah dimensi.
-
-Kekurangan _Cosine Similarity_:
-- Hanya memperhitungkan arah dari vektor, tanpa memperhitungkan magnitudo (besarnya).
-- Perbedaan dalam magnitudo vektor tidak sepenuhnya diperhitungkan, yang berarti nilai-nilai yang sangat berbeda dapat dianggap mirip jika arah vektornya sama.
-
+| Rekomendasi                       | Genre                                      |
+|-----------------------------------|--------------------------------------------|
+| D-Day	                            | Romance, Drama, Medical                    |
+| Good Doctor	                      | Romance, Life, Drama, Medical              |
+| If You Wish Upon Me	              | Romance, Life, Drama, Medical              |
+| God's Quiz: Reboot	               | Mystery, Medical                           |
+| Dr. Romantic 2                    | Romance, Drama, Medical, Melodrama         |
 
 ### K-Nearest Neighbor
-_K-Nearest Neighbor (KNN)_ adalah salah satu algoritma paling sederhana dalam klasifikasi data. Algoritma ini mudah dipahami karena mengelompokkan data berdasarkan jarak terdekat dengan tetangga lainnya. Dalam KNN, kita mempertimbangkan sejumlah tetangga terdekat (ditentukan oleh parameter K) untuk menentukan kelas atau label dari data yang akan diklasifikasikan. Ketika K=1, algoritma hanya memperhitungkan satu tetangga terdekat atau satu rekaman data dengan karakteristik terdekat.[[6](https://medium.com/bee-solution-partners/cara-kerja-algoritma-k-nearest-neighbor-k-nn-389297de543e)] 
-
 K-Nearest Neighbor dituliskan dalam rumus:
 
  $$Euclidean Distance (P, Q) = sqrt(∑(Pi - Qi)^2)$$
 
 dimana:
-- Pi mewakili fitur ke-i dari titik data P.
-- Qi mewakili fitur ke-i dari titik data Q (titik data dari kumpulan data D).
-- ∑ merupakan simbol penjumlahan pada semua fitur titik data.
+- Pi, mewakili fitur ke-i dari titik data P.
+- Qi, mewakili fitur ke-i dari titik data Q (titik data dari kumpulan data D).
+- ∑ adalah simbol penjumlahan pada semua fitur titik data.
 
+- Input: data genre & rating
+- Output: Top-N rekomendasi
+- Parameter penting: jumlah tetangga (`k`), metrik jarak
+  
 berikut merupakan hasil pengujian model _K-Nearest Neighbor_ dengan _metrik Euclidean Distance_: 
 
-Apabila pengguna menyukai aplikasi:_**Neon Genesis Evangelion Death  Rebirth**_
+apabila pengguna menyukai drama :_**"Tomorrow"**_
 
 Berikut ini adalah aplikasi yang juga mungkin akan disukai :
-| Anime Name                                   | Similarity Score |
+| KDrama Name                                  | Similarity Score |
 |----------------------------------------------|------------------|
-| Neon Genesis Evangelion Death Rebirth        | 100.0%           |
-| Neon Genesis Evangelion The End of Evangelion| 98.94%           |
-| Kekkaishi TV                                 | 98.59%           |
-| Doraemon Doraemon Comes Back                 | 98.59%           |
-| Dr Slump Aralechan                           | 98.59%           |
-
-Tabel 2. Hasil Pengujian Model K-Nearest Neighbor
-
-Berdasarkan _Tabel 2. Hasil Pengujian Model K-Nearest Neighbor_, kita dapat melihat bahwa model _K-Nearest Neighbor_ memberikan rekomendasi Anime berdasarkan kemiripan fitur-fitur seperti 'Name', 'Score', 'Type', dan 'Studios'. Hasil rekomendasi untuk Anime yang mirip dengan `Neon Genesis Evangelion Death  Rebirth` berdasarkan berdasarkan fitur-fitur yang dipelajari memberikan hasil rekomendasi aplikasi serupa yaitu: _Neon Genesis Evangelion Death Rebirth, Neon Genesis Evangelion The End of Evangelion, Kekkaishi TV, Doraemon Doraemon Comes Back, Dr Slump Aralechan_. Seperti tampak pada _Tabel 2. Hasil Pengujian Model K-Nearest Neighbor_ dengan tingkat kemiripan dalam persentase berturut-turut senilai 100.0%, 98.94%, 98.59%, 98.59%, 98.59% . Tentunya model ini akan sangat membantu pengguna menemukan aplikasi yang mirip dengan **_Neon Genesis Evangelion Death Rebirth_**.
-
-Kelebihan KNN:
-- Pelatihan sangat cepat.
-- Sederhana dan mudah dipelajari.
-- Tahan terhadap data pelatihan yang memiliki derau.
-- Efektif jika data pelatihan besar.
-
-Kekurangan KNN:
-- Penentuan nilai k menjadi bias dalam model.
-- Komputasi yang kompleks, terutama pada data besar atau dimensi fitur tinggi.
-- Keterbatasan memori karena harus menyimpan semua data pelatihan.
-- Rentan terhadap atribut yang tidak relevan yang dapat memengaruhi hasil klasifikasi.
-
+| Our Beloved Summer                           | 98.57%           |
+| One Spring Night                            	| 98.5%            |
+| Rookie Historian Goo Hae Ryung	              | 98.46%           |
+| Happiness                                    | 98.0%            |
+| SKY Castle	                                  | 98.0%            |
 
 ## Evaluation
-Metrik evaluasi digunakan untuk menilai seberapa baik performa suatu model. Dalam konteks ini, beberapa metrik evaluasi yang umum digunakan untuk mengukur kinerja model antara lain Precission, Calinski Harabasz Score, dan Davies Bouldin Score. Metrik-metrik ini bertujuan untuk memberikan gambaran tentang seberapa baik model bekerja dalam melakukan tugas tertentu, seperti klasifikasi atau klastering data.
+- **Precision@k**: Seberapa relevan rekomendasi Top-k
+- **Calinski-Harabasz Score**: Evaluasi kualitas klaster,
+  Skor ini digunakan untuk mengevaluasi kualitas hasil clustering. Semakin tinggi nilainya, semakin baik performa clustering karena :
+  - Variasi antar klaster (jarak antara klaster) besar.
+  - Variasi dalam klaster (jarak antar data dalam satu klaster) kecil.
+Nilai 13.28 menunjukkan bahwa terdapat pemisahan klaster yang cukup baik, meskipun skor ini belum terlalu tinggi. Bisa jadi masih ada ruang untuk meningkatkan pemisahan antar klaster.
+- **Davies-Bouldin Score**: Evaluasi klaster berdasarkan kesamaan dalam dan antar klaster,
+  Skor ini juga digunakan untuk mengevaluasi hasil clustering, namun dengan logika yang berbeda. Semakin rendah nilainya, semakin baik, karena menunjukkan:
+  - Klaster saling berjauhan satu sama lain.
+  - Data dalam satu klaster lebih kompak.
+Nilai 3.10 tergolong kurang baik karena idealnya nilai ini mendekati 0. Ini mengindikasikan bahwa beberapa klaster mungkin masih terlalu tumpang tindih atau data dalam satu klaster belum cukup homogen.
 
-### Precission
-_Precission_ adalah metrik yang penting untuk mengevaluasi kinerja model pengelompokan. Metrik ini membantu dalam memahami seberapa akurat model dalam mengidentifikasi data positif. Nilai presisi yang tinggi menunjukkan bahwa model jarang membuat prediksi positif yang salah, sehingga prediksi positifnya dapat lebih dipercaya.[[7](https://esairina.medium.com/memahami-confusion-matrix-accuracy-precision-recall-specificity-dan-f1-score-610d4f0db7cf)] 
-
-_Precission_ dituliskan dalam rumus:
-
-$$Presisi = \frac{TP}{TP + FP}$$
-
-dimana: 
-- TP (True Positive): Jumlah data yang diprediksi positif dan memang benar-benar positif.
-- FP (False Positive): Jumlah data yang diprediksi positif, namun kenyataannya adalah negatif.
-
-
-*Interpretasi* dari hasil presisi berdasarkan _Table 1. Hasil Pengujian Model Content Based Filtering (dengan Filter Genres)_. menunjukkan bahwa presisi model rekomendasi Top-5 adalah sempurna, yaitu 5/5 atau 100%. Ini menandakan bahwa model tersebut memberikan rekomendasi dengan tingkat presisi yang sangat tinggi, yakni 100%. Ini sesuai dengan hasil pengujian yang menunjukkan bahwa model mampu memberikan rekomendasi dengan nama dan genre yang mirip dengan anime `One Piece`, seperti _Action, Adventure, Comedy, Drama, Fantasy_, Shounen, dan Super Power. Hasil rekomendasi menampilkan lima aplikasi dengan genre yang serupa dengan `One Piece`.
-
-### Calinski-Harabasz score
-Calinski-Harabasz score adalah metrik evaluasi untuk algoritme pengelompokan yang mengukur seberapa baik pengelompokan memisahkan data ke dalam kelompok-kelompok yang kompak dan terpisah. Didefinisikan sebagai rasio antara sebaran dalam cluster dan sebaran antar cluster, semakin tinggi nilai CH, semakin baik kinerja pengelompokan tersebut, tanpa memerlukan informasi tentang label kebenaran dasar.[[8](https://medium.com/@haataa/how-to-measure-clustering-performances-when-there-are-no-ground-truth-db027e9a871c)] 
-
-Rumus  Calinski-Harabasz Score (CH) adalah:
-
-$$CH = \frac{B}{W} \times \frac{N - k}{k - 1}$$
-
-Di mana:
-- \( B \) adalah sebaran antar cluster (between-cluster scatter).
-- \( W \) adalah sebaran dalam cluster (within-cluster scatter).
-- \( N \) adalah jumlah total data.
-- \( k \) adalah jumlah cluster.
-
-Untuk melakukan pengujian model, digunakan potongan kode berikut.
-```python
-calinski_harabasz_score(data_new, animedf_name)
-```
-Dan didapatkan score dari pengujian model.
-```
-3.1613291729405617
-```
-Hasil evaluasi menunjukkan bahwa kluster dalam model ini masih belum terpisahkan dengan baik, yang tercermin dari nilai skor Calinski-Harabasz (CH) yang relatif rendah sebesar `3.1613291729405617`. Kondisi ini mengindikasikan adanya potensi untuk rekomendasi yang kurang sesuai pada beberapa aplikasi, yang mungkin tidak sepenuhnya sesuai dengan preferensi pengguna. Oleh karena itu, perlu dilakukan peninjauan lebih lanjut atau penyesuaian pada model untuk meningkatkan pemisahan kluster dan akurasi rekomendasi.
-
-### Davies Bouldin Score
- _**Davies Bouldin Score (DB)**_ adalah metrik evaluasi kinerja pengelompokan yang mengukur rata-rata kesamaan setiap cluster dengan cluster yang paling mirip dengan membandingkan jarak dalam cluster terhadap jarak antar cluster. Dengan skor minimum nol, semakin rendah nilai DB, semakin baik kinerja pengelompokannya, menunjukkan cluster yang lebih dekat satu sama lain dan kurang tersebar. Berbeda dari sebagian besar metrik, DB tidak memerlukan pengetahuan apriori tentang label kebenaran dasar, mirip dengan Silhouette Score, namun memiliki formulasi yang lebih sederhana, memberikan cara efisien untuk mengevaluasi pengelompokan tanpa memerlukan pengetahuan tambahan tentang struktur data.[[9](https://ieeexplore.ieee.org/document/4766909)] 
- 
- Rumus Davies-Bouldin Score (DB) adalah:
-
-
-$$DB = \frac{1}{k} \sum_{i=1}^{k} \max_{j \neq i} \left( \frac{R_i + R_j}{d(c_i, c_j)} \right)$$
-
-Di mana:
-- \( k \) adalah jumlah cluster.
-- \( R_i \) adalah radius dalam cluster ke-i.
-- \( d(c_i, c_j) \) adalah jarak antara pusat cluster ke-i (\( c_i \)) dan pusat cluster ke-j (\( c_j \)).
-
-Davies-Bouldin didefinisikan sebagai rata-rata dari nilai-nilai R, di mana setiap nilai R adalah rasio antara jumlah dari radius dalam cluster (dalam pengertian jarak, misalnya Euclidean distance) dan jarak antara pusat cluster, dengan pusat-pusat yang lain. Rasio ini digunakan untuk mengevaluasi kemiripan setiap cluster dengan cluster lain.
-
-Untuk melakukan pengujian model, digunakan potongan kode berikut.
-```python
-davies_bouldin_score(data_new, animedf_name)
-```
-Dan didapatkan score dari pengujian model.
-```python
-0.7864266764751376
-```
-
-Hasil evaluasi Davies-Bouldin (DB) menunjukkan bahwa model ini memiliki skor yang relatif cukup kecil, dengan nilai DB sebesar `0.7864266764751376` Hal ini menandakan bahwa model sudah memiliki separasi kluster yang cukup baik. Sebagai hasilnya, rekomendasi anime memiliki kualitas yang baik, mempertimbangkan bahwa pengelompokan kluster dalam model sudah cukup efektif dalam memisahkan data. Hal ini terbukti dengan hasil rekomendasi aplikasi yang sudah cukup baik.
-
-
-
-
-
-_
+## 7. Kesimpulan
+- Sistem berhasil merekomendasikan KDrama serupa berdasarkan genre dan rating.
+- Cosine Similarity efektif untuk pendekatan content-based.
+- KNN menambah variasi hasil rekomendasi.
+- Sistem dapat dikembangkan dengan memasukkan feedback pengguna atau metode hybrid filtering.
