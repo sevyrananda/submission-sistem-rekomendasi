@@ -81,6 +81,12 @@ Langkah-langkah persiapan data :
    Melakukan scaling pada fitur numerik (Rating) sebelum digunakan pada model KNN.
  
 ## 5. Modeling 
+- Menggunakan **Cosine Similarity** antar fitur drama.
+- Fungsi rekomendasi mencari drama paling mirip berdasarkan drama pilihan pengguna.
+- 2 Skema rekomendasi:
+  - Berdasarkan **Genre saja**
+  - Berdasarkan **Genre + Rating**
+    
 ### Content-Based Filtering (Cosine Similarity)
 
 **Metode**:
@@ -109,45 +115,37 @@ Jika input: `Memory`, maka output:
 | Touch Your Heart	                 | Comedy, Law, Romance, Drama                |
 | Confession                        | Thriller, Mystery, Law, Drama              |
 
-### K-Nearest Neighbor
-**Metode**:
-- Menggunakan kombinasi fitur Genre (TF-IDF) dan Rating.
-- Menghitung jarak menggunakan Euclidean Distance.
+## 6. Evaluation
+### 1. Metrik Evaluasi
+Sistem dievaluasi menggunakan **Precision**, yaitu:
+- Precision = (Jumlah rekomendasi relevan) / (Jumlah total rekomendasi)
 
-  
-K-Nearest Neighbor dituliskan dalam rumus:
+**Alasan:**  
+Precision lebih sesuai untuk sistem rekomendasi Content-Based Filtering (CBF) dibandingkan menggunakan metrik clustering seperti kmeans.
 
- $$Euclidean Distance (P, Q) = sqrt(∑(Pi - Qi)^2)$$
+---
 
-dimana:
-- Pi, mewakili fitur ke-i dari titik data P.
-- Qi, mewakili fitur ke-i dari titik data Q (titik data dari kumpulan data D).
-- ∑ adalah simbol penjumlahan pada semua fitur titik data.
+### 2. Hasil Evaluasi
 
-- Input: data genre & rating
-- Output: Top-N rekomendasi
-- Parameter penting: jumlah tetangga (`k`), metrik jarak
-  
-berikut merupakan hasil pengujian model _K-Nearest Neighbor_ dengan _metrik Euclidean Distance_: 
+| Skema | Precision |
+|:------|:----------|
+| Genre saja | 0.60 |
+| Genre + Rating | 0.80 |
 
-apabila pengguna menyukai drama :_**"Memory"**_
+**Kesimpulan:**
+- Menambahkan **rating** meningkatkan relevansi rekomendasi.
+- Sistem mampu memberikan rekomendasi yang relevan dengan preferensi pengguna.
 
-Berikut ini adalah aplikasi yang juga mungkin akan disukai :
-| KDrama Name                                  | Similarity Score |
-|----------------------------------------------|------------------|
-| Our Beloved Summer                           | 98.57%           |
-| One Spring Night                            	| 98.5%            |
-| Rookie Historian Goo Hae Ryung	              | 98.46%           |
-| Happiness                                    | 98.0%            |
-| SKY Castle	                                  | 98.0%            |
+## 🔎 Additional Analysis (Opsional)
 
-## Evaluation
-### Evaluasi yang dilakukan:
+Sebagai tambahan, dilakukan analisis clustering terhadap drama menggunakan KMeans.
 
-- **Calinski-Harabasz Score**: Mengukur kualitas pemisahan klaster pada hasil clustering.
-  - Skor = **13.28** → menunjukkan pemisahan klaster cukup baik.
-- **Davies-Bouldin Score**: Mengukur kesamaan dalam dan antar klaster.
-  - Skor = **3.10** → masih terdapat tumpang tindih antar klaster.
+- **Calinski-Harabasz Score**: 13.28 → menunjukkan kualitas klaster cukup baik.
+- **Davies-Bouldin Score**: 3.10 → menunjukkan masih ada sedikit overlap antar klaster.
+
+> *Catatan:*  
+> Analisis clustering ini **bukan** digunakan untuk mengevaluasi performa sistem rekomendasi, melainkan hanya untuk memahami struktur data.
+
 
 ### Hubungan dengan Business Understanding
 
@@ -159,5 +157,4 @@ Berikut ini adalah aplikasi yang juga mungkin akan disukai :
 ## 7. Kesimpulan
 - Sistem rekomendasi berhasil memberikan rekomendasi drama relevan berdasarkan genre dan rating.
 - Cosine Similarity efektif dalam memahami kemiripan konten.
-- KNN berhasil memperkaya hasil rekomendasi berdasarkan kombinasi fitur.
-- Evaluasi clustering menunjukkan sistem cukup baik namun bisa ditingkatkan dengan pendekatan hybrid filtering dan integrasi feedback pengguna.
+- Sistem rekomendasi berbasis Content-Based Filtering berhasil dikembangkan dengan hasil evaluasi yang memuaskan. Untuk pengembangan lebih lanjut, sistem dapat diperluas dengan atribut tambahan seperti aktor, tahun rilis, atau ulasan pengguna.
