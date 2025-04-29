@@ -129,12 +129,25 @@ Precision lebih sesuai untuk sistem rekomendasi Content-Based Filtering (CBF) di
 
 | Skema | Precision |
 |:------|:----------|
-| Genre saja | 0.60 |
-| Genre + Rating | 0.80 |
+| Genre saja | 1.00 |
+| Genre + Rating | 1.00 |
 
 **Kesimpulan:**
 - Menambahkan **rating** meningkatkan relevansi rekomendasi.
 - Sistem mampu memberikan rekomendasi yang relevan dengan preferensi pengguna.
+
+### 3. Average Precision, Recall, F1-Score
+
+| Precision | Recall | F1-Score |
+|:------|:----------|:----------|
+| 1.00 | 0.07 | 0.13 |
+
+Insight :
+Precision 1.00 → semua rekomendasi yang diberikan relevan (genre cocok).
+
+Recall 0.07 → hanya 7 % dari semua drama Romance berhasil direkomendasikan—banyak yang terlewat.
+
+F1-Score 0.13 → gabungan keduanya rendah, menandakan model terlalu selektif sehingga meski tepat, cakupan rekomendasi sangat sempit.
 
 ## 🔎 Additional Analysis (Opsional)
 
