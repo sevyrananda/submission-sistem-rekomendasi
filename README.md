@@ -69,16 +69,12 @@ Dataset : [Kaggle](https://www.kaggle.com/datasets/ahbab911/top-250-korean-drama
 *    Rank : Peringkat KDrama
 
 ## 4. Data Preparation
+Langkah-langkah persiapan data:
 
-Langkah-langkah persiapan data :
-1. Menghapus Missing Values : Semua entri dengan nilai kosong dihapus menggunakan `data = data.dropna()`
-2. Drop Kolom Tidak Relevan : Menghapus fitur seperti Aired Date, Synopsis, Tags, Director, Cast, dll, yang tidak digunakan dalam modeling.
-3. Ekstraksi Fitur :
-   Menggunakan fitur Genre dan Rating untuk proses rekomendasi.
-4. TF-IDF Vectorization :
-   Mengubah teks genre menjadi representasi numerik menggunakan TF-IDF (Term Frequency-Inverse Document Frequency) untuk model berbasis konten.
-5. Standardisasi Data:
-   Melakukan scaling pada fitur numerik (Rating) sebelum digunakan pada model KNN.
+- **Menghapus Missing Values**: Semua entri dengan nilai kosong dihapus menggunakan `data = data.dropna()`.
+- **Pemilihan Fitur**: Menggunakan fitur `Genre` untuk proses rekomendasi.
+- **TF-IDF Vectorization**: Mengubah teks pada kolom `Genre` menjadi representasi numerik menggunakan TF-IDF.
+
  
 ## 5. Modeling 
 - Menggunakan **Cosine Similarity** antar fitur drama.
@@ -105,6 +101,7 @@ dimana:
 - ||B|| mewakili norma Euclidean (magnitudo) dari vektor B.
 
 untuk menguji model  mencoba seperti ini 
+1. Rekomendasi berdasarkan genre saja
 Jika input: `Memory`, maka output:
 
 | Rekomendasi                       | Genre                                      |
@@ -115,13 +112,35 @@ Jika input: `Memory`, maka output:
 | Touch Your Heart	                 | Comedy, Law, Romance, Drama                |
 | Confession                        | Thriller, Mystery, Law, Drama              |
 
+2. Rekomendasi berdasarkan genre + rating
+Input yang digunakan `Memory`, maka output:
+
+|Name	| Genre |	Rating |
+|-----|-------|--------|
+| Extraordinary Attorney Woo	Law| Romance| Life | Drama	9.0 |
+| Defendant	Thriller | Mystery | Law | Drama	8.7 |
+| Big Mouth	Thriller | Mystery | Law, Drama	8.6 |
+| Juvenile Justice	Law | Drama	8.6 |
+| Stranger 2	Thriller | Mystery | Law | Drama	8.6 |
+| Because This Is My First Life	Comedy | Romance | Life | Drama	8.5 |
+| My Unfamiliar Family	Life | Drama	8.4 |
+| Oh My Venus	Comedy | Law | Romance | Life	8.3 |
+| Touch Your Heart	Comedy | Law | Romance | Drama	8.3 |
+| When the Weather Is Fine	Romance | Life | Drama | Melodrama	8.3 |
+
+📌 Kesimpulan:
+
+- Skema pertama cukup baik untuk menemukan drama serupa secara konten.
+- Skema kedua menambahkan filter kualitas (rating) yang lebih membantu pengguna dalam memilih tontonan terbaik dari genre yang mirip.
+
+
 ## 6. Evaluation
 ### 1. Metrik Evaluasi
-Sistem dievaluasi menggunakan **Precision**, yaitu:
-- Precision = (Jumlah rekomendasi relevan) / (Jumlah total rekomendasi)
+Sistem rekomendasi dievaluasi menggunakan:
 
-**Alasan:**  
-Precision lebih sesuai untuk sistem rekomendasi Content-Based Filtering (CBF) dibandingkan menggunakan metrik clustering seperti kmeans.
+- Precision: Mengukur proporsi rekomendasi yang relevan terhadap total rekomendasi.
+- Recall: Mengukur sejauh mana sistem berhasil menemukan item relevan.
+- F1-Score: Harmonik rata-rata Precision dan Recall.
 
 ---
 
@@ -132,9 +151,9 @@ Precision lebih sesuai untuk sistem rekomendasi Content-Based Filtering (CBF) di
 | Genre saja | 1.00 |
 | Genre + Rating | 1.00 |
 
-**Kesimpulan:**
-- Menambahkan **rating** meningkatkan relevansi rekomendasi.
-- Sistem mampu memberikan rekomendasi yang relevan dengan preferensi pengguna.
+**Insight**:
+- Semua rekomendasi pada kedua skema relevan terhadap genre yang dicari.
+- Menambahkan filter rating tidak menurunkan kualitas, bahkan membantu menyaring tontonan lebih berkualitas.
 
 ### 3. Average Precision, Recall, F1-Score
 
@@ -142,12 +161,11 @@ Precision lebih sesuai untuk sistem rekomendasi Content-Based Filtering (CBF) di
 |:------|:----------|:----------|
 | 1.00 | 0.07 | 0.13 |
 
-Insight :
-Precision 1.00 → semua rekomendasi yang diberikan relevan (genre cocok).
+**Insight**:
 
-Recall 0.07 → hanya 7 % dari semua drama Romance berhasil direkomendasikan—banyak yang terlewat.
-
-F1-Score 0.13 → gabungan keduanya rendah, menandakan model terlalu selektif sehingga meski tepat, cakupan rekomendasi sangat sempit.
+- Precision tinggi → sistem sangat tepat dalam memberikan rekomendasi yang sesuai.
+- Recall rendah → sistem hanya merekomendasikan sebagian kecil dari semua drama yang sesuai genre → sistem terlalu selektif.
+- F1-score rendah → sistem sangat hati-hati, tapi mengorbankan cakupan.
 
 ## 🔎 Additional Analysis (Opsional)
 
@@ -168,6 +186,6 @@ Sebagai tambahan, dilakukan analisis clustering terhadap drama menggunakan KMean
 
   
 ## 7. Kesimpulan
-- Sistem rekomendasi berhasil memberikan rekomendasi drama relevan berdasarkan genre dan rating.
-- Cosine Similarity efektif dalam memahami kemiripan konten.
-- Sistem rekomendasi berbasis Content-Based Filtering berhasil dikembangkan dengan hasil evaluasi yang memuaskan. Untuk pengembangan lebih lanjut, sistem dapat diperluas dengan atribut tambahan seperti aktor, tahun rilis, atau ulasan pengguna.
+- Sistem berhasil menjawab seluruh pertanyaan pada Business Understanding.
+- Evaluasi menunjukkan bahwa model sangat akurat, namun bisa lebih baik dalam menjangkau lebih banyak tontonan.
+- Sistem dapat dikembangkan lebih lanjut dengan kombinasi metode Content-Based dan Collaborative Filtering, serta mempertimbangkan data pengguna dan ulasan.
